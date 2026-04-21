@@ -9,13 +9,39 @@
 </head>
 <body>
     <div class="container">
-        <h1>IT Admin Zentrale</h1>
+        <div class="header-area">
+            <h1>IT Admin Zentrale</h1>
+            <div class="clock-container">
+                <div id="current-time">00:00:00</div>
+                <div id="current-date">Lade Datum...</div>
+            </div>
+        </div>
         
         <div class="grid">
             <div class="card">
                 <h2>🌐 Public IP</h2>
                 <div id="ip-display" style="font-size: 1.8rem; text-align: center; margin: 20px 0; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-weight: bold;">--.---.---.--</div>
-                <button onclick="fetchIP()" style="width:100%; padding:10px; cursor:pointer; background: var(--accent); border:none; border-radius:4px; font-weight:bold;">Refresh IP</button>
+                <div style="display: flex; gap: 5px;">
+                    <button onclick="fetchIP()" style="flex: 1; padding:10px; background: var(--card-border); border:none; border-radius:4px; color: white;">Refresh</button>
+                    <button onclick="copyToClipboard(document.getElementById('ip-display').innerText, event)" style="flex: 1; padding:10px; background: var(--accent); border:none; border-radius:4px; color: var(--bg); font-weight: bold;">Copy IP</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🟢 Service Health</h2>
+                <div class="status-list">
+                    <div class="status-item"><span>GitHub</span> <span id="github-status"><span class="status-dot online"></span>Operational</span></div>
+                    <div class="status-item"><span>Azure</span> <span><span class="status-dot online"></span>Operational</span></div>
+                    <div class="status-item"><span>M365</span> <span><span class="status-dot warning"></span>Advisory</span></div>
+                </div>
+                <p style="font-size: 0.7rem; color: var(--subtext); margin-top: 10px;">Status wird alle 5 Min. aktualisiert.</p>
+            </div>
+
+            <div class="card">
+                <h2>💻 System Info</h2>
+                <div id="system-info">
+                    <p style="color: var(--subtext);">Erkenne Umgebung...</p>
+                </div>
             </div>
 
             <div class="card">

@@ -132,6 +132,24 @@ function copyToClipboard(text, event) { // Accept event as argument
     });
 }
 
+async function fetchServiceStatus() {
+    const githubEl = document.getElementById('github-status');
+    if (!githubEl) return;
+
+    try {
+        const response = await fetch('https://www.githubstatus.com/api/v2/status.json');
+        const data = await response.json();
+        const { indicator, description } = data.status;
+
+        const statusClass = indicator === 'none' ? 'online' : 'warning';
+
+        githubEl.innerHTML = `<span class="status-dot ${statusClass}"></span>${description}`;
+    } catch (e) {
+        console.error("GitHub Status Check failed:", e);
+        githubEl.innerHTML = `<span class="status-dot warning"></span>Check Error`;
+    }
+}
+
 // Scratchpad Initialisierung
 document.addEventListener("DOMContentLoaded", () => {
     const pad = document.getElementById('scratchpad');
@@ -141,8 +159,40 @@ document.addEventListener("DOMContentLoaded", () => {
             localStorage.setItem('admin_notes', pad.value);
         });
     }
-    // No need to call loadLinks here for snippets, it's called in snippets.html
+    
+    if (document.getElementById('current-time')) {
+        updateClock();
+        setInterval(updateClock, 1000);
+        getBrowserInfo();
+        fetchIP();
+        fetchServiceStatus();
+        setInterval(fetchServiceStatus, 300000); // 5 minute refresh
+    }
 });
+
+function updateClock() {
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    const dateStr = now.toLocaleDateString('de-DE', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
+    
+    document.getElementById('current-time').textContent = timeStr;
+    document.getElementById('current-date').textContent = dateStr;
+}
+
+function getBrowserInfo() {
+    const infoEl = document.getElementById('system-info');
+    if (!infoEl) return;
+    
+    const os = navigator.platform;
+    const screen = `${window.screen.width}x${window.screen.height}`;
+    const browser = navigator.userAgent.split(' ').pop();
+    
+    infoEl.innerHTML = `
+        <div class="status-item"><span>OS:</span> <span>${os}</span></div>
+        <div class="status-item"><span>Browser:</span> <span>${browser}</span></div>
+        <div class="status-item"><span>Res:</span> <span>${screen}</span></div>
+    `;
+}
 
 // --- Passwort Generator ---
 function generatePassword() {
