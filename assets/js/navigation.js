@@ -7,7 +7,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const nav = document.createElement('nav');
     const path = window.location.pathname;
-    const page = path.split("/").pop() || "index.html";
+    let page = path.split("/").pop() || "index.html";
+    
+    // Handle local directory paths
+    if (page === "") page = "index.html";
 
     navItems.forEach(item => {
         const link = document.createElement('a');
@@ -16,6 +19,5 @@ document.addEventListener("DOMContentLoaded", function() {
         if (page === item.url) link.classList.add('active');
         nav.appendChild(link);
     });
-
     document.body.prepend(nav);
 });

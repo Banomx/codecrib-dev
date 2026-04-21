@@ -1,0 +1,74 @@
+{
+    "snippets": [
+        {
+            "title": "PowerShell: AD User Unlock",
+            "code": "Unlock-ADAccount -Identity ",
+            "display": "Unlock-ADAccount -Identity \"user\""
+        },
+        {
+            "title": "PowerShell: Test Port",
+            "code": "Test-NetConnection -ComputerName localhost -Port 3389",
+            "display": "TNC -ComputerName \"IP\" -Port 3389"
+        },
+        {
+            "title": "PowerShell: Get BIOS Serial",
+            "code": "(Get-CimInstance Win32_Bios).SerialNumber",
+            "display": "Get BIOS Serial"
+        },
+        {
+            "title": "PowerShell: OS Architecture",
+            "code": "Get-CimInstance Win32_OperatingSystem | Select-Object Caption, Version, OSArchitecture",
+            "display": "Get OS Info"
+        },
+        {
+            "title": "PowerShell: Top Memory Processes",
+            "code": "Get-Process | Sort-Object WorkingSet64 -Descending | Select-Object -First 10 Name, @{Name='Mem(MB)';Expression={ [math]::round($_.WorkingSet64 / 1MB, 2) }}",
+            "display": "Top 10 RAM Usage"
+        },
+        {
+            "title": "Linux: Disk Space Check",
+            "code": "df -h",
+            "display": "df -h"
+        },
+        {
+            "title": "Linux: Listening Ports",
+            "code": "ss -tulpn",
+            "display": "ss -tulpn"
+        },
+        {
+            "title": "Linux: Follow Log",
+            "code": "tail -f /var/log/syslog",
+            "display": "tail -f /var/log/syslog"
+        },
+        {
+            "title": "Linux: Memory Usage",
+            "code": "free -m",
+            "display": "free -m"
+        },
+        {
+            "title": "Linux: Public IP",
+            "code": "curl ifconfig.me",
+            "display": "curl ifconfig.me"
+        },
+        {
+            "title": "Network: Flush DNS",
+            "code": "ipconfig /flushdns",
+            "display": "ipconfig /flushdns"
+        },
+        {
+            "title": "Network: Show IP (Win)",
+            "code": "Get-NetIPAddress -AddressFamily IPv4 | Select-Object IPAddress, InterfaceAlias",
+            "display": "Get-NetIPAddress"
+        },
+        {
+            "title": "Network: Continuous Ping",
+            "code": "ping -t 8.8.8.8",
+            "display": "ping -t 8.8.8.8"
+        },
+        {
+            "title": "Network: ARP Table",
+            "code": "arp -a",
+            "display": "arp -a"
+        }
+    ]
+}

@@ -14,7 +14,8 @@ async function fetchIP() {
 // JSON Daten laden und HTML generieren
 async function loadLinks(type) {
     try {
-        const response = await fetch('assets/data/links.json');
+        const fileName = type === 'snippets' ? 'snippets.json' : 'links.json';
+        const response = await fetch(`assets/data/${fileName}`);
         const data = await response.json();
 
         if (type === 'dashboard') {
@@ -41,6 +42,21 @@ async function loadLinks(type) {
                 </div>
             `).join('');
         }
+
+        else if (type === 'snippets') {
+            const container = document.getElementById('snippets-grid');
+            container.innerHTML = ''; // Clear loader
+            data.snippets.forEach(s => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `<h2>${s.title}</h2>`;
+                const code = document.createElement('code');
+                code.textContent = s.display;
+                code.onclick = () => copyToClipboard(s.code);
+                card.appendChild(code);
+                container.appendChild(card);
+            });
+        }
     } catch (e) {
         console.error("Fehler beim Laden der JSON-Daten:", e);
     }
@@ -48,10 +64,16 @@ async function loadLinks(type) {
 
 // Kopieren-Funktion für Snippets
 function copyToClipboard(text) {
+    if (!text) return;
     navigator.clipboard.writeText(text).then(() => {
         const originalText = event.target.innerText;
-        event.target.innerText = "✅ Kopiert!";
-        setTimeout(() => { event.target.innerText = originalText; }, 1500);
+        const originalColor = event.target.style.color;
+        event.target.innerText = "COPIED TO CLIPBOARD!";
+        event.target.style.color = "var(--success)";
+        setTimeout(() => { 
+            event.target.innerText = originalText;
+            event.target.style.color = originalColor;
+        }, 1500);
     });
 }
 
