@@ -1,88 +1,208 @@
 {
-    "snippets": [
-        {
-            "category": "Active Directory",
-            "title": "PowerShell: AD User Unlock",
-            "code": "Unlock-ADAccount -Identity ",
-            "display": "Unlock-ADAccount -Identity \"user\""
-        },
-        {
-            "category": "Networking",
-            "title": "PowerShell: Test Port",
-            "code": "Test-NetConnection -ComputerName localhost -Port 3389",
-            "display": "TNC -ComputerName \"IP\" -Port 3389"
-        },
-        {
-            "category": "System Info",
-            "title": "PowerShell: Get BIOS Serial",
-            "code": "(Get-CimInstance Win32_Bios).SerialNumber",
-            "display": "Get BIOS Serial"
-        },
-        {
-            "category": "System Info",
-            "title": "PowerShell: OS Architecture",
-            "code": "Get-CimInstance Win32_OperatingSystem | Select-Object Caption, Version, OSArchitecture",
-            "display": "Get OS Info"
-        },
-        {
-            "category": "System Info",
-            "title": "PowerShell: Top Memory Processes",
-            "code": "Get-Process | Sort-Object WorkingSet64 -Descending | Select-Object -First 10 Name, @{Name='Mem(MB)';Expression={ [math]::round($_.WorkingSet64 / 1MB, 2) }}",
-            "display": "Top 10 RAM Usage"
-        },
-        {
-            "category": "Linux",
-            "title": "Linux: Disk Space Check",
-            "code": "df -h",
-            "display": "df -h"
-        },
-        {
-            "category": "Linux",
-            "title": "Linux: Listening Ports",
-            "code": "ss -tulpn",
-            "display": "ss -tulpn"
-        },
-        {
-            "category": "Linux",
-            "title": "Linux: Follow Log",
-            "code": "tail -f /var/log/syslog",
-            "display": "tail -f /var/log/syslog"
-        },
-        {
-            "category": "Linux",
-            "title": "Linux: Memory Usage",
-            "code": "free -m",
-            "display": "free -m"
-        },
-        {
-            "category": "Linux",
-            "title": "Linux: Public IP",
-            "code": "curl ifconfig.me",
-            "display": "curl ifconfig.me"
-        },
-        {
-            "category": "Networking",
-            "title": "Network: Flush DNS",
-            "code": "ipconfig /flushdns",
-            "display": "ipconfig /flushdns"
-        },
-        {
-            "category": "Networking",
-            "title": "Network: Show IP (Win)",
-            "code": "Get-NetIPAddress -AddressFamily IPv4 | Select-Object IPAddress, InterfaceAlias",
-            "display": "Get-NetIPAddress"
-        },
-        {
-            "category": "Networking",
-            "title": "Network: Continuous Ping",
-            "code": "ping -t 8.8.8.8",
-            "display": "ping -t 8.8.8.8"
-        },
-        {
-            "category": "Networking",
-            "title": "Network: ARP Table",
-            "code": "arp -a",
-            "display": "arp -a"
-        }
-    ]
+  "snippets": [
+    {
+      "title": "Ping Google DNS (Windows)",
+      "display": "ping 8.8.8.8 -t",
+      "code": "ping 8.8.8.8 -t",
+      "category": "Netzwerk (Win)"
+    },
+    {
+      "title": "Ping Google DNS (Linux)",
+      "display": "ping 8.8.8.8",
+      "code": "ping 8.8.8.8",
+      "category": "Netzwerk (Linux)"
+    },
+    {
+      "title": "IP-Konfiguration anzeigen (Windows)",
+      "display": "ipconfig /all",
+      "code": "ipconfig /all",
+      "category": "Netzwerk (Win)"
+    },
+    {
+      "title": "IP-Konfiguration anzeigen (Linux)",
+      "display": "ip a",
+      "code": "ip a",
+      "category": "Netzwerk (Linux)"
+    },
+    {
+      "title": "Netzwerkverbindungen anzeigen (Windows)",
+      "display": "netstat -ano",
+      "code": "netstat -ano",
+      "category": "Netzwerk (Win)"
+    },
+    {
+      "title": "Netzwerkverbindungen anzeigen (Linux)",
+      "display": "ss -tuln",
+      "code": "ss -tuln",
+      "category": "Netzwerk (Linux)"
+    },
+    {
+      "title": "DNS-Cache leeren (Windows)",
+      "display": "ipconfig /flushdns",
+      "code": "ipconfig /flushdns",
+      "category": "Netzwerk (Win)"
+    },
+    {
+      "title": "Systeminformationen (Windows)",
+      "display": "systeminfo",
+      "code": "systeminfo",
+      "category": "System (Win)"
+    },
+    {
+      "title": "Systeminformationen (Linux)",
+      "display": "uname -a && cat /etc/os-release",
+      "code": "uname -a && cat /etc/os-release",
+      "category": "System (Linux)"
+    },
+    {
+      "title": "Aktive Prozesse anzeigen (Windows)",
+      "display": "tasklist",
+      "code": "tasklist",
+      "category": "Prozesse (Win)"
+    },
+    {
+      "title": "Aktive Prozesse anzeigen (Linux)",
+      "display": "ps aux",
+      "code": "ps aux",
+      "category": "Prozesse (Linux)"
+    },
+    {
+      "title": "Dienste anzeigen (Windows)",
+      "display": "Get-Service | Where-Object {$_.Status -eq 'Running'}",
+      "code": "Get-Service | Where-Object {$_.Status -eq 'Running'}",
+      "category": "Dienste (Win)"
+    },
+    {
+      "title": "Dienste anzeigen (Linux)",
+      "display": "systemctl list-units --type=service --state=running",
+      "code": "systemctl list-units --type=service --state=running",
+      "category": "Dienste (Linux)"
+    },
+    {
+      "title": "Event Viewer öffnen (Windows)",
+      "display": "eventvwr.msc",
+      "code": "eventvwr.msc",
+      "category": "Diagnose (Win)"
+    },
+    {
+      "title": "Letzte Log-Einträge (Linux)",
+      "display": "journalctl -xe",
+      "code": "journalctl -xe",
+      "category": "Diagnose (Linux)"
+    },
+    {
+      "title": "Dateiberechtigungen ändern (Linux)",
+      "display": "chmod 755 /path/to/file",
+      "code": "chmod 755 /path/to/file",
+      "category": "Dateien (Linux)"
+    },
+    {
+      "title": "Besitzer ändern (Linux)",
+      "display": "chown user:group /path/to/file",
+      "code": "chown user:group /path/to/file",
+      "category": "Dateien (Linux)"
+    },
+    {
+      "title": "Benutzer hinzufügen (Linux)",
+      "display": "sudo adduser newuser",
+      "code": "sudo adduser newuser",
+      "category": "Benutzer (Linux)"
+    },
+    {
+      "title": "Externe IP abrufen (PowerShell)",
+      "display": "Invoke-RestMethod -Uri 'https://api.ipify.org'",
+      "code": "Invoke-RestMethod -Uri 'https://api.ipify.org'",
+      "category": "Netzwerk (Win)"
+    },
+    {
+      "title": "Drucker-Warteschlange neustarten",
+      "display": "Restart-Service Spooler -Force",
+      "code": "Restart-Service Spooler -Force",
+      "category": "System (Win)"
+    },
+    {
+      "title": "AD-Benutzer entsperren",
+      "display": "Unlock-ADAccount -Identity 'username'",
+      "code": "Unlock-ADAccount -Identity 'username'",
+      "category": "Active Directory"
+    },
+    {
+      "title": "AD-Benutzer Info abrufen",
+      "display": "Get-ADUser -Identity 'username' -Properties *",
+      "code": "Get-ADUser -Identity 'username' -Properties *",
+      "category": "Active Directory"
+    },
+    {
+      "title": "Domain Controller auflisten",
+      "display": "Get-ADDomainController -Filter * | Select Name, IPv4Address",
+      "code": "Get-ADDomainController -Filter * | Select Name, IPv4Address",
+      "category": "Active Directory"
+    },
+    {
+      "title": "Docker: Alle Container anzeigen",
+      "display": "docker ps -a",
+      "code": "docker ps -a",
+      "category": "Docker"
+    },
+    {
+      "title": "Docker: Container Ressourcen-Nutzung",
+      "display": "docker stats",
+      "code": "docker stats",
+      "category": "Docker"
+    },
+    {
+      "title": "Docker: Unbenutzte Daten bereinigen",
+      "display": "docker system prune -a",
+      "code": "docker system prune -a",
+      "category": "Docker"
+    },
+    {
+      "title": "Festplattenbelegung (Human Readable)",
+      "display": "du -sh * | sort -h",
+      "code": "du -sh * | sort -h",
+      "category": "Dateien (Linux)"
+    },
+    {
+      "title": "Spezifische Datei suchen",
+      "display": "find / -name 'filename'",
+      "code": "find / -name 'filename'",
+      "category": "Dateien (Linux)"
+    },
+    {
+      "title": "SSH-Key generieren (Ed25519)",
+      "display": "ssh-keygen -t ed25519 -C 'email@example.com'",
+      "code": "ssh-keygen -t ed25519 -C 'email@example.com'",
+      "category": "Sicherheit"
+    },
+    {
+      "title": "SSL-Zertifikat prüfen (OpenSSL)",
+      "display": "openssl s_client -connect domain.tld:443",
+      "code": "openssl s_client -connect domain.tld:443",
+      "category": "Sicherheit"
+    },
+    {
+      "title": "Windows Update Verlauf anzeigen",
+      "display": "Get-HotFix | Sort-Object InstalledOn -Descending",
+      "code": "Get-HotFix | Sort-Object InstalledOn -Descending",
+      "category": "Diagnose (Win)"
+    },
+    {
+      "title": "Seriennummer abfragen (BIOS/UEFI)",
+      "display": "wmic bios get serialnumber",
+      "code": "wmic bios get serialnumber",
+      "category": "System (Win)"
+    },
+    {
+      "title": "CPU Temperatur (Linux CLI)",
+      "display": "watch -n 2 vcgencmd measure_temp",
+      "code": "watch -n 2 vcgencmd measure_temp",
+      "category": "Diagnose (Linux)"
+    },
+    {
+      "title": "Hardware-Details (Linux)",
+      "display": "sudo lshw -short",
+      "code": "sudo lshw -short",
+      "category": "System (Linux)"
+    }
+  ]
 }

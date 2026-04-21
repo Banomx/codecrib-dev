@@ -117,12 +117,17 @@ nav a.active {
     border-radius: 12px;
     padding: 1.5rem;
     transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    max-width: 100%;
+    min-width: 0; /* Important: Prevents content from expanding the card beyond grid width */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .card:hover {
     transform: translateY(-4px);
     border-color: var(--accent);
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
 .card h2 {
@@ -167,14 +172,31 @@ input:focus {
 .status-item {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
     padding: 8px 0;
     border-bottom: 1px solid rgba(255,255,255,0.05);
+    min-width: 0;
 }
 
 .status-item a {
+    flex: 1;
     color: var(--text);
     text-decoration: none;
     transition: color 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.status-item > span[id] {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    min-width: 0;
+    overflow: hidden;
 }
 
 .status-item a:hover {
@@ -187,23 +209,14 @@ input:focus {
     border-radius: 50%;
     display: inline-block;
     margin-right: 8px;
-}
-.online { background-color: var(--success); box-shadow: 0 0 8px var(--success); }
-.warning { background-color: #f59e0b; box-shadow: 0 0 8px #f59e0b; }
-.danger { background-color: var(--danger); box-shadow: 0 0 8px var(--danger); }
-
-.status-item > span[id] {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    text-align: right;
+    flex-shrink: 0;
 }
 
 .incident-title {
     font-size: 0.65rem;
     color: var(--subtext);
     margin-top: 2px;
-    max-width: 150px;
+    max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -259,6 +272,25 @@ input:focus {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.copy-btn {
+    background: #1e293b;
+    border: 1px solid var(--card-border);
+    color: var(--text);
+    padding: 0 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+}
+
+.copy-btn:hover {
+    background: var(--accent);
+    color: var(--bg);
 }
 
 .disclaimer-container {
@@ -349,6 +381,10 @@ code:hover {
 }
 
 /* Tags */
+.btn-list div[style*="display: flex"] {
+    min-width: 0;
+}
+
 .btn-list a {
     display: block;
     padding: 0.75rem;
@@ -360,6 +396,14 @@ code:hover {
     text-decoration: none;
     font-size: 0.9rem;
     transition: all 0.2s;
+    min-width: 0; /* Critical for truncation in flex */
+    overflow: hidden;
+}
+
+.btn-list a span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .btn-list a:hover {

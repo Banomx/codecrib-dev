@@ -48,7 +48,16 @@
         {"name": "Process Explorer", "url": "https://download.sysinternals.com/files/ProcessExplorer.zip", "os": "Win"},
         {"name": "HWiNFO", "url": "https://www.hwinfo.com/download.php", "os": "Win"},
         {"name": "WizTree", "url": "https://diskanalyzer.com/", "os": "Win"},
-        {"name": "Sysinternals Suite", "url": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysinternals-suite", "os": "Win"}
+        {"name": "Sysinternals Suite", "url": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysinternals-suite", "os": "Win"},
+        {"name": "CrystalDiskInfo", "url": "https://crystalmark.info/en/software/crystaldiskinfo/", "os": "Win"},
+        {"name": "WinDirStat", "url": "https://windirstat.net/download.html", "os": "Win"},
+        {"name": "CPU-Z", "url": "https://www.cpuid.com/softwares/cpu-z.html", "os": "Win"},
+        {"name": "Revo Uninstaller", "url": "https://www.revouninstaller.com/revo-uninstaller-free-download/", "os": "Win"},
+        {"name": "Geek Uninstaller", "url": "https://geekuninstaller.com/download", "os": "Win"},
+        {"name": "7-Zip", "url": "https://www.7-zip.org/download.html", "os": "Win"},
+        {"name": "GPU-Z", "url": "https://www.techpowerup.com/gpuz/", "os": "Win"},
+        {"name": "LibreHardwareMonitor", "url": "https://github.com/LibreHardwareMonitor/LibreHardwareMonitor/releases", "os": "Win"},
+        {"name": "Microsoft PowerToys", "url": "https://github.com/microsoft/PowerToys/releases", "os": "Win"}
       ]
     },
     {
@@ -57,14 +66,105 @@
         {"name": "Advanced IP Scanner", "url": "https://www.advanced-ip-scanner.com/download/", "os": "Win"},
         {"name": "Wireshark", "url": "https://www.wireshark.org/#download", "os": "All"},
         {"name": "Nmap / Zenmap", "url": "https://nmap.org/download.html", "os": "All"},
-        {"name": "PuTTY", "url": "https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html", "os": "Win"}
+        {"name": "PuTTY", "url": "https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html", "os": "Win"},
+        {"name": "FileZilla Client", "url": "https://filezilla-project.org/download.php?type=client", "os": "All"},
+        {"name": "WinMTR", "url": "https://sourceforge.net/projects/winmtr/", "os": "Win"},
+        {"name": "Angry IP Scanner", "url": "https://angryip.org/download/", "os": "All"},
+        {"name": "iperf3 (Network Stress)", "url": "https://iperf.fr/iperf-download.php", "os": "All"},
+        {"name": "LocalSend (File Sharing)", "url": "https://localsend.org/download", "os": "All"}
       ]
     },
     {
       "category": "Remote & Support",
       "items": [
         {"name": "AnyDesk", "url": "https://anydesk.com/de/downloads", "os": "All"},
-        {"name": "RustDesk", "url": "https://rustdesk.com/", "os": "All"}
+        {"name": "RustDesk", "url": "https://rustdesk.com/", "os": "All"},
+        {"name": "mRemoteNG", "url": "https://mremoteng.org/download", "os": "Win"}
+      ]
+    },
+    {
+      "category": "ISO & USB Tools",
+      "items": [
+        {"name": "Rufus", "url": "https://rufus.ie/", "os": "Win"},
+        {"name": "Ventoy", "url": "https://www.ventoy.net/en/download.html", "os": "All"},
+        {"name": "BalenaEtcher", "url": "https://www.balena.io/etcher/", "os": "All"}
+      ]
+    },
+    {
+      "category": "Security & Passwords",
+      "items": [
+        {"name": "Bitwarden", "url": "https://bitwarden.com/download/", "os": "All"},
+        {"name": "KeePassXC", "url": "https://keepassxc.org/download/", "os": "All"},
+        {"name": "VeraCrypt", "url": "https://www.veracrypt.fr/en/Downloads.html", "os": "All"}
+      ]
+    },
+    {
+      "category": "Dev & Editor",
+      "items": [
+        {"name": "VS Code", "url": "https://code.visualstudio.com/download", "os": "All"},
+        {"name": "Notepad++", "url": "https://notepad-plus-plus.org/downloads/", "os": "Win"},
+        {"name": "Windows Terminal", "url": "https://aka.ms/terminal", "os": "Win"},
+        {"name": "DBeaver Community", "url": "https://dbeaver.io/download/", "os": "All"},
+        {"name": "HeidiSQL", "url": "https://www.heidisql.com/download.php", "os": "Win"}
+      ]
+    },
+    {
+      "category": "Maintenance & Backup",
+      "items": [
+        {"name": "Veeam Agent (Free)", "url": "https://www.veeam.com/windows-endpoint-server-backup-free.html", "os": "Win"},
+        {"name": "Macrium Reflect Free", "url": "https://www.macrium.com/reflectfree", "os": "Win"},
+        {"name": "Recuva", "url": "https://www.ccleaner.com/recuva/download", "os": "Win"},
+        {"name": "MiniTool Partition Wizard", "url": "https://www.partitionwizard.com/free-partition-manager.html", "os": "Win"},
+        {"name": "BleachBit", "url": "https://www.bleachbit.org/download", "os": "All"}
+      ]
+    },
+    {
+      "category": "Benchmark & Stress Test",
+      "items": [
+        {"name": "Prime95 (CPU Stress)", "url": "https://www.mersenne.org/download/", "os": "All"},
+        {"name": "FurMark (GPU Stress)", "url": "https://geeks3d.com/furmark/", "os": "Win"},
+        {"name": "Cinebench", "url": "https://www.maxon.net/en/cinebench", "os": "All"},
+        {"name": "CrystalDiskMark", "url": "https://crystalmark.info/en/software/crystaldiskmark/", "os": "Win"},
+        {"name": "MemTest86+", "url": "https://www.memtest.org/", "os": "All"},
+        {"name": "OCCT (Stability Test)", "url": "https://www.ocbase.com/download", "os": "Win"}
+      ]
+    },
+    {
+      "category": "Recovery & Boot",
+      "items": [
+        {"name": "Hirens BootCD PE", "url": "https://www.hirensbootcd.org/download/", "os": "Win"},
+        {"name": "Snappy Driver Installer", "url": "https://www.glenn.delahoy.com/snappy-driver-installer-origin/", "os": "Win"},
+        {"name": "SystemRescue", "url": "https://www.system-rescue.org/Download/", "os": "All"}
+      ]
+    },
+    {
+      "category": "Multimedia & Office",
+      "items": [
+        {"name": "VLC Media Player", "url": "https://www.videolan.org/vlc/", "os": "All"},
+        {"name": "LibreOffice", "url": "https://www.libreoffice.org/download/download/", "os": "All"},
+        {"name": "Brave Browser", "url": "https://brave.com/download/", "os": "All"},
+        {"name": "ShareX", "url": "https://getsharex.com/downloads", "os": "Win"},
+        {"name": "OBS Studio", "url": "https://obsproject.com/download", "os": "All"},
+        {"name": "Handbrake", "url": "https://handbrake.fr/downloads.php", "os": "All"},
+        {"name": "Draw.io Desktop", "url": "https://github.com/jgraph/drawio-desktop/releases", "os": "All"}
+      ]
+    },
+    {
+      "category": "Virtualization",
+      "items": [
+        {"name": "VMware Workstation Player", "url": "https://www.vmware.com/products/workstation-player.html", "os": "Win"},
+        {"name": "VirtualBox", "url": "https://www.virtualbox.org/wiki/Downloads", "os": "All"},
+        {"name": "Proxmox ISO", "url": "https://www.proxmox.com/en/downloads", "os": "All"},
+        {"name": "Docker Desktop", "url": "https://www.docker.com/products/docker-desktop/", "os": "All"}
+      ]
+    },
+    {
+      "category": "Drivers & Support",
+      "items": [
+        {"name": "Intel Driver Assistant", "url": "https://www.intel.com/content/www/us/en/support/detect.html", "os": "Win"},
+        {"name": "Dell SupportAssist", "url": "https://www.dell.com/support/contents/en-us/article/product-support/self-support-knowledgebase/software-and-downloads/supportassist", "os": "Win"},
+        {"name": "HP Support Assistant", "url": "https://support.hp.com/us-en/help/hp-support-assistant", "os": "Win"},
+        {"name": "Lenovo Vantage", "url": "https://www.lenovo.com/us/en/software/vantage/", "os": "Win"}
       ]
     }
   ]

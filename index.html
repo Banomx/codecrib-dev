@@ -19,6 +19,21 @@
         
         <div class="grid">
             <div class="card">
+                <h2>🕸️ Site Availability</h2>
+                <div style="display: flex; gap: 5px; margin-bottom: 10px;">
+                    <input type="text" id="site-url" placeholder="https://example.com" 
+                        style="flex-grow: 1; background: #0f172a; color: white; border: 1px solid #334155; padding: 8px; border-radius: 4px;">
+                </div>
+                <button onclick="checkSiteStatus()" 
+                        style="width: 100%; padding: 10px; background: var(--accent); border: none; border-radius: 4px; color: var(--bg); font-weight: bold; cursor: pointer;">
+                    Status prüfen
+                </button>
+                <div id="site-result" style="margin-top: 10px; font-size: 0.85rem; font-family: monospace; color: var(--subtext);">
+                    URL eingeben (CORS-beachtet)...
+                </div>
+            </div>
+
+            <div class="card">
                 <h2>🌐 Network Identity</h2>
                 <div id="ip-display" style="font-size: 1.8rem; text-align: center; margin: 15px 0; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-weight: bold;">--.---.---.--</div>
                 

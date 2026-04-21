@@ -2,6 +2,7 @@
 
 // Global variable to store all snippets
 let allSnippets = [];
+let allSoftware = [];
 async function fetchIP() {
     const el = document.getElementById('ip-display');
     const localEl = document.getElementById('ip-local');
@@ -95,19 +96,13 @@ async function loadLinks(type) {
         } 
         
         else if (type === 'software') {
-            const container = document.getElementById('software-grid');
-            container.innerHTML = data.software.map(cat => `
-                <div class="card">
-                    <h2>${cat.category}</h2>
-                    <div class="btn-list">
-                        ${cat.items.map(item => `
-                            <a href="${item.url}" target="_blank">
-                                ${item.name} <span class="tag ${item.os.toLowerCase()}">${item.os}</span>
-                            </a>
-                        `).join('')}
-                    </div>
-                </div>
-            `).join('');
+            allSoftware = data.software;
+            displaySoftware(allSoftware);
+
+            const softwareSearch = document.getElementById('software-search');
+            if (softwareSearch) {
+                softwareSearch.addEventListener('input', filterSoftware);
+            }
         }
 
         else if (type === 'snippets') {
@@ -128,6 +123,51 @@ async function loadLinks(type) {
         };
         if (containers[type]) document.getElementById(containers[type]).innerHTML = `<p style="color: var(--danger); font-size: 0.8rem;">⚠️ Fehler beim Laden (JSON Error)</p>`;
     }
+}
+
+// Function to display software in the grid
+function displaySoftware(categories) {
+    const container = document.getElementById('software-grid');
+    if (!container) return;
+    
+    container.innerHTML = categories.map(cat => {
+        if (cat.items.length === 0) return '';
+        return `
+            <div class="card">
+                <h2>${cat.category}</h2>
+                <div class="btn-list">
+                    ${cat.items.map(item => `
+                        <div style="display: flex; gap: 8px; margin-bottom: 0.5rem; min-width: 0;">
+                            <a href="${item.url}" target="_blank" style="flex: 1; margin-bottom: 0; min-width: 0;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                    <span>${item.name}</span>
+                                    <span class="status-dot online" style="margin:0; width:6px; height:6px;" title="Available"></span>
+                                </div>
+                                <div style="font-size: 0.65rem; opacity: 0.6; margin-top: 4px;">OS: ${item.os}</div>
+                            </a>
+                            <button onclick="copyToClipboard('${item.url}', event)" class="copy-btn" title="Copy Link">📋</button>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// Function to filter software based on search
+function filterSoftware() {
+    const searchTerm = document.getElementById('software-search').value.toLowerCase();
+    
+    const filtered = allSoftware.map(cat => {
+        const filteredItems = cat.items.filter(item => 
+            item.name.toLowerCase().includes(searchTerm) || 
+            item.os.toLowerCase().includes(searchTerm) ||
+            cat.category.toLowerCase().includes(searchTerm)
+        );
+        return { ...cat, items: filteredItems };
+    }).filter(cat => cat.items.length > 0);
+
+    displaySoftware(filtered);
 }
 
 // Function to display snippets in the grid
@@ -657,5 +697,36 @@ function toggleDisclaimer(element) {
     } else {
         disclaimerText.classList.add('expanded');
         arrow.classList.add('rotated');
+    }
+}
+
+// --- Website Availability Checker ---
+async function checkSiteStatus() {
+    const urlInput = document.getElementById('site-url').value.trim();
+    const resEl = document.getElementById('site-result');
+    
+    if (!urlInput) {
+        resEl.innerHTML = "❌ Bitte URL eingeben.";
+        return;
+    }
+
+    const url = urlInput.startsWith('http') ? urlInput : `https://${urlInput}`;
+    resEl.innerHTML = '<span style="color: var(--accent)">Prüfe Erreichbarkeit...</span>';
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+    try {
+        // We use mode: 'no-cors' to just check if the site is there at all
+        const response = await fetch(url, { mode: 'no-cors', signal: controller.signal });
+        resEl.innerHTML = `<span style="color: var(--success)">✅ Seite ist erreichbar!</span><br><span style="font-size: 0.7rem;">(Antwort erhalten via Browser-Fetch)</span>`;
+    } catch (err) {
+        if (err.name === 'AbortError') {
+            resEl.innerHTML = `<span style="color: var(--danger)">❌ Timeout: Seite antwortet nicht.</span>`;
+        } else {
+            resEl.innerHTML = `<span style="color: var(--warning)">⚠️ Fehler: Verbindung fehlgeschlagen.</span><br><span style="font-size: 0.7rem;">Mögliche Ursache: DNS-Fehler oder restriktive CORS-Policy.</span>`;
+        }
+    } finally {
+        clearTimeout(timeoutId);
     }
 }
