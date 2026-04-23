@@ -66,6 +66,8 @@ async function fetchIP() {
     const localEl = document.getElementById('ip-local');
     const ispEl = document.getElementById('ip-isp');
     const asnEl = document.getElementById('ip-asn');
+    const locationEl = document.getElementById('ip-location');
+    const securityEl = document.getElementById('ip-security');
 
     el.innerText = "Checking...";
 
@@ -94,14 +96,28 @@ async function fetchIP() {
             el.innerText = pubRes.ip || "Error";
             if (ispEl) ispEl.innerText = pubRes.connection?.isp || pubRes.connection?.org || "Unknown";
             if (asnEl) asnEl.innerText = pubRes.connection?.asn || "N/A";
+            
+            if (locationEl) {
+                const city = pubRes.city || "";
+                const country = pubRes.country || "";
+                const flag = pubRes.flag?.emoji || "";
+                locationEl.innerText = `${city}, ${country} ${flag}`.trim() || "Unknown";
+            }
+
+            if (securityEl) {
+                const isVpn = pubRes.security?.vpn || pubRes.security?.proxy || pubRes.security?.tor;
+                securityEl.innerText = isVpn ? "⚠️ Proxy/VPN detected" : "✅ Direct Connection";
+                securityEl.style.color = isVpn ? "var(--warning)" : "var(--success)";
+            }
         } else {
             // Fallback to ipify if the rich API fails
             const backup = await fetch('https://api.ipify.org?format=json').then(r => r.json()).catch(() => null);
             el.innerText = backup ? backup.ip : "Error";
             
             // Reset labels to avoid "Lade..." hang
-            const fields = [ispEl, asnEl];
+            const fields = [ispEl, asnEl, locationEl, securityEl];
             fields.forEach(f => { if(f) f.innerText = "N/A (API Limit/Error)"; });
+            if (securityEl) securityEl.style.color = "var(--subtext)";
         }
 
         if (localEl && localIps) {
@@ -110,7 +126,7 @@ async function fetchIP() {
     } catch (e) { 
         el.innerText = "Offline/Error"; 
         // Ensure "Lade..." is cleared even on catch
-        const fields = [ispEl, asnEl, localEl];
+        const fields = [ispEl, asnEl, localEl, locationEl, securityEl];
         fields.forEach(f => { if(f && f.innerText === "Lade...") f.innerText = "Error"; });
     }
 }
