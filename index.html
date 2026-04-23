@@ -162,6 +162,43 @@
                 </div>
             </div>
 
+            <div class="card" data-search-keywords="dns, lookup, records, mx, a, txt, cloudflare, networking">
+                <h2>🔎 DNS Lookup</h2>
+                <div style="display: flex; gap: 5px; margin-bottom: 10px;">
+                    <input type="text" id="dns-query" placeholder="example.com" 
+                        style="flex: 2; background: var(--bg); color: white; border: 1px solid var(--card-border); padding: 8px; border-radius: 4px;">
+                    <select id="dns-type" style="flex: 1; background: var(--bg); color: var(--text); border: 1px solid var(--card-border); border-radius: 4px; font-size: 0.8rem;">
+                        <option value="A">A</option>
+                        <option value="AAAA">AAAA</option>
+                        <option value="MX">MX</option>
+                        <option value="TXT">TXT</option>
+                        <option value="CNAME">CNAME</option>
+                    </select>
+                </div>
+                <button onclick="fetchDNS()" 
+                        style="width: 100%; padding: 10px; background: var(--accent); border: none; border-radius: 4px; color: var(--bg); font-weight: bold; cursor: pointer;">
+                    Query Cloudflare DNS
+                </button>
+                <div id="dns-result" style="margin-top: 10px; font-size: 0.8rem; font-family: monospace; color: var(--subtext); max-height: 100px; overflow-y: auto; background: rgba(0,0,0,0.2); padding: 5px; border-radius: 4px;">
+                    Query results appear here...
+                </div>
+            </div>
+
+            <div class="card" data-search-keywords="hash, sha256, security, crypto, checksum, verification">
+                <h2>🛡️ Security Hasher</h2>
+                <div class="util-box">
+                    <textarea id="hash-input" placeholder="Text for SHA-256 hashing..." style="min-height: 60px; font-size: 0.8rem;"></textarea>
+                    <button onclick="generateHash()" 
+                            style="width: 100%; padding: 8px; background: var(--card-border); color: white; font-size: 0.8rem;">Generate SHA-256</button>
+                    <div style="position: relative;">
+                        <div id="hash-output" style="font-size: 0.7rem; color: var(--accent); word-break: break-all; min-height: 2.5em; border: 1px solid var(--card-border); padding: 8px; border-radius: 4px; cursor: pointer;" 
+                             onclick="copyToClipboard(this.innerText, event)" title="Click to copy">
+                            Hash result...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="card" data-search-keywords="port, network, scanner, scan, subnet, netzwerk, ip, check">
                 <h2>🔌 Port & Network Scanner</h2>
                 <div style="display: flex; gap: 5px; margin-bottom: 10px;">

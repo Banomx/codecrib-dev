@@ -437,11 +437,29 @@ function updateClock() {
     document.getElementById('current-date').textContent = dateStr;
 }
 
+async function updateBatteryStatus() {
+    if (!navigator.getBattery) return;
+    try {
+        const battery = await navigator.getBattery();
+        const updateInfo = () => {
+            const level = Math.round(battery.level * 100);
+            const charging = battery.charging ? " (Laden)" : "";
+            const el = document.getElementById('battery-info');
+            if (el) el.innerText = `${level}%${charging}`;
+        };
+        battery.addEventListener('levelchange', updateInfo);
+        battery.addEventListener('chargingchange', updateInfo);
+        updateInfo();
+    } catch (e) { console.warn("Battery API restricted."); }
+}
+
 function getBrowserInfo() {
     const infoEl = document.getElementById('system-info');
     if (!infoEl) return;
     
     const os = navigator.platform;
+    updateBatteryStatus();
+
     const userAgent = navigator.userAgent;
 
     // --- OS Detection ---
@@ -521,6 +539,7 @@ function getBrowserInfo() {
         <div class="status-item"><span>Language:</span> <span>${lang}</span></div>
         <div class="status-item"><span>CPU Cores:</span> <span>${cores}</span></div>
         <div class="status-item"><span>Memory:</span> <span>~${memory}</span></div>
+        <div class="status-item"><span>Battery:</span> <span id="battery-info">N/A</span></div>
         <div class="status-item"><span>Timezone:</span> <span>${tz}</span></div>
         <div class="status-item" style="font-size: 0.65rem; color: var(--subtext); word-break: break-all;"><span>User Agent:</span> <span title="${userAgent}">${userAgent}</span></div>
     `;
@@ -656,6 +675,44 @@ async function updateLatency() {
             document.querySelector(`#${target.id} .latency-value`).innerText = `Error`;
         }
     });
+}
+
+async function fetchDNS() {
+    const domain = document.getElementById('dns-query').value.trim();
+    const type = document.getElementById('dns-type').value;
+    const resEl = document.getElementById('dns-result');
+    
+    if (!domain) return;
+    resEl.innerText = "Querying Cloudflare...";
+
+    try {
+        const response = await fetch(`https://cloudflare-dns.com/dns-query?name=${domain}&type=${type}`, {
+            headers: { 'accept': 'application/dns-json' }
+        });
+        const data = await response.json();
+        if (data.Answer) {
+            resEl.innerHTML = data.Answer.map(ans => `<div style="margin-bottom:4px;">• ${ans.data} <span style="font-size:0.6rem; color:var(--accent)">TTL: ${ans.TTL}</span></div>`).join('');
+        } else {
+            resEl.innerText = "No records found.";
+        }
+    } catch (e) {
+        resEl.innerText = "Error: DoH lookup failed.";
+    }
+}
+
+async function generateHash() {
+    const input = document.getElementById('hash-input').value;
+    const outputEl = document.getElementById('hash-output');
+    if (!input) return;
+
+    const msgUint8 = new TextEncoder().encode(input);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    
+    outputEl.innerText = hashHex;
+    outputEl.style.color = "var(--accent)";
+    showNotification("SHA-256 generiert!");
 }
 
 // --- Utility Handlers (Base64/URL) ---
