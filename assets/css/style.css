@@ -125,6 +125,24 @@ nav a.active {
     background: rgba(16, 185, 129, 0.1);
 }
 
+/* Staggered Entry Animation */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+    animation: fadeInUp 0.4s ease forwards;
+    opacity: 0;
+}
+
+/* Apply delays based on index via style attribute in JS if needed, 
+   or just general classes for static ones */
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.15s; }
+.card:nth-child(3) { animation-delay: 0.2s; }
+.card:nth-child(n+4) { animation-delay: 0.25s; }
+
 /* Notifications */
 #notification-container {
     position: fixed;

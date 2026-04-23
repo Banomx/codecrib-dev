@@ -206,6 +206,9 @@
                 <textarea id="scratchpad" placeholder="Notizen für den aktuellen Task (Auto-Save)..." style="min-height: 120px;"></textarea>
                 <div class="scratchpad-controls">
                     <button class="scratchpad-btn" onclick="copyToClipboard(document.getElementById('scratchpad').value, event)">Copy All</button>
+                    <button class="scratchpad-btn" onclick="exportScratchpad()">Export</button>
+                    <button class="scratchpad-btn" onclick="document.getElementById('import-file').click()">Import</button>
+                    <input type="file" id="import-file" style="display:none" onchange="importScratchpad(event)">
                     <button class="scratchpad-btn" onclick="clearScratchpad()">Clear</button>
                 </div>
                 <p style="font-size: 0.7rem; color: var(--subtext); margin-top: 5px;">Daten werden nur lokal im Browser gespeichert.</p>

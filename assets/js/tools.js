@@ -143,12 +143,12 @@ async function loadLinks(type) {
         if (type === 'dashboard') {
             const container = document.getElementById('dashboard-links');
             container.innerHTML = data.dashboard.map(link => `
-                <a href="${link.url}" target="_blank" style="display: flex; flex-direction: column; gap: 2px; padding: 10px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                <a href="${link.url}" target="_blank" class="dashboard-link-item" data-keywords="${link.desc}">
+                    <div class="dashboard-link-header">
                         <span style="font-weight: 600;">${link.title}</span>
                         <span style="font-size: 0.7rem; opacity: 0.5;">↗</span>
                     </div>
-                    <div style="font-size: 0.75rem; color: var(--subtext); font-weight: 400; line-height: 1.2;">${link.desc}</div>
+                    <div class="dashboard-link-desc">${link.desc}</div>
                 </a>
             `).join('');
         } 
@@ -291,6 +291,28 @@ function copyToClipboard(text, event) { // Accept event as argument
             setTimeout(() => el.style.transform = "", 100);
         }
     });
+}
+
+function exportScratchpad() {
+    const text = document.getElementById('scratchpad').value;
+    const blob = new Blob([text], { type: 'text/plain' });
+    const anchor = document.createElement('a');
+    anchor.download = `codecrib-notes-${new Date().toISOString().slice(0,10)}.txt`;
+    anchor.href = window.URL.createObjectURL(blob);
+    anchor.click();
+    showNotification("Export erfolgreich! 💾");
+}
+
+function importScratchpad(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        document.getElementById('scratchpad').value = e.target.result;
+        localStorage.setItem('admin_notes', e.target.result);
+        showNotification("Import abgeschlossen! 📥");
+    };
+    reader.readAsText(file);
 }
 
 function clearScratchpad() {
