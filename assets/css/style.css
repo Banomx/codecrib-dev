@@ -171,8 +171,9 @@ nav a.active {
 /* Grid & Cards */
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
+    grid-auto-flow: dense; /* Fills in holes created by hero cards */
 }
 
 /* Hero Cards for Hierarchy */
